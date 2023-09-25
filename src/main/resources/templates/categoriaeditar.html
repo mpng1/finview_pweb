@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Editar Categoria</title>
+</head>
+<body>
+    <div class="container mt-5">
+	<nav class="navbar navbar-expand bg-body-tertiary d-flex justify-content-between mb-3">
+		<div class="navbar-nav">
+			<a class="nav-link" href="/lista">Transações</a>
+			<a class="nav-link" href="/lista/categoria">Categorias</a>
+			<a class="nav-link" href="/lista/orcamento">Orçamentos</a>
+		</div>
+	</nav>
+        <h1 class="display-4 text-center">Editar Categoria</h1>
+        
+        <form th:object="${requisicaoEditarCategoria}" th:action="@{/categoria/{id}(id=${id})}" method="post" class="mt-2">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input th:field="*{nome}" th:errorclass="is-invalid" type="text" class="form-control">
+                <input type="hidden" th:attr="value=${requisicaoEditarCategoria.nome}" />
+                <div class="invalid-feedback" th:errors="*{nome}">
+                    Preencha um nome para a categoria.
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-outline-secondary col-12 mb-4">Enviar</button>
+        </form>
+        <form th:action="@{'/categoria/' + ${id}}" method="post" style="display: inline;">
+    		<input type="hidden" name="_method" value="DELETE">
+    		<button type="submit" class="btn btn-outline-danger col-12 mb-4">Deletar</button>
+		</form>        
+    </div>
+</body>
+</html>

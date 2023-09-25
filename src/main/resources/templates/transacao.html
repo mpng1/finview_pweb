@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Nova Transação</title>
+</head>
+<body>
+    <div class="container mt-5">
+	<nav class="navbar navbar-expand bg-body-tertiary d-flex justify-content-between mb-3">
+		<div class="navbar-nav">
+			<a class="nav-link" href="/lista">Transações</a>
+			<a class="nav-link" href="/lista/categoria">Categorias</a>
+			<a class="nav-link" href="/lista/orcamento">Orçamentos</a>
+		</div>
+	</nav>
+        <h1 class="display-4 text-center">Nova Transação</h1>
+
+        <h3 class="display-6 mt-3">Inserir manualmente</h3>
+        <form th:object="${requisicaoNovaTransacao}" action="/transacao" method="post" class="mt-2">
+            <div class="mb-3">
+                <label for="data" class="form-label">Data/Hora</label>
+                <input th:field="*{data}" th:errorclass="is-invalid" type="date" class="form-control">
+                <div class="invalid-feedback" th:errors="*{data}">
+                    Preencha uma data válida.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="valor" class="form-label">Valor em R$</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="valor-addon">R$</span>
+                    <input placeholder="0.00" type="text" th:field="*{valor}" th:errorclass="is-invalid" id="valor" class="form-control">
+                </div>
+  				 <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="valorSwitch" onchange="toggleValorSign()">
+                </div>
+                <div class="mb-2">
+                    <span class="fw-bold">+</span>
+                    <label class="form-check-label" for="valorSwitch">ou</label>
+                    <span class="fw-bold">-</span>
+                </div>
+                <div class="invalid-feedback" th:errors="*{valor}">
+                    Insira um valor válido.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição</label>
+                <input th:field="*{descricao}" th:errorclass="is-invalid" class="form-control">
+                <div class="invalid-feedback" th:errors="*{descricao}">
+                    Preencha a descrição.
+                </div>
+            </div>
+            
+            <div class="mb-3">
+			    <label for="categoria" class="form-label">Categoria</label>
+			    <select th:field="*{categoria}" class="form-select">
+			        <option value="">Selecione uma categoria</option>
+			        <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nome}"></option>
+			    </select>
+			    <div class="invalid-feedback" th:errors="*{categoria}">
+			        Selecione uma categoria válida.
+			    </div>
+			</div>
+
+            <button type="submit" class="btn btn-outline-secondary col-12">Enviar</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleValorSign() {
+            const valorInput = document.getElementById('valor');
+            const valorSwitch = document.getElementById('valorSwitch');
+
+            // Parse the current value as a number
+            let value = parseFloat(valorInput.value);
+
+            // Make the value negative if the switch is checked (true) and positive if it's not checked (false).
+            if (valorSwitch.checked) {
+                value = Math.abs(value) * -1;
+            } else {
+                value = Math.abs(value);
+            }
+
+            // Update the input field with the new value
+            valorInput.value = value.toFixed(2); // Format as a decimal with two decimal places
+        }
+    </script>
+</body>
+</html>

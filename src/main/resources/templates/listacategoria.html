@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Minhas Transações</title>
+</head>
+<body>
+    <div class="container mt-5">
+	<nav class="navbar navbar-expand bg-body-tertiary d-flex justify-content-between mb-3">
+		<div class="navbar-nav">
+			<a class="nav-link" href="/lista">Transações</a>
+			<a class="nav-link" href="/lista/categoria">Categorias</a>
+			<a class="nav-link" href="/lista/orcamento">Orçamentos</a>
+		</div>
+	</nav>
+        <h1 class="display-4 text-center">Minhas Categorias</h1>
+			<nav class="navbar navbar-expand bg-body-tertiary d-flex justify-content-between mb-3">
+				<a href="/categoria"><button class="btn btn-outline-secondary">Nova</button></a>
+			</nav>
+			<div class="row" th:each="categoria : ${categorias}">
+			<th:block th:unless="${categoria.id == 3}">
+        		<a th:href="@{'/categoria/' + ${categoria.id}}">
+            	<ul class="list-group list-group-horizontal">
+                <li class="list-group-item col-12" th:text="${categoria.nome}">Dívida</li>
+            	</ul>
+		        </a>
+		    </th:block>
+		</div>
+
+		</div>
+	</body>
+</html>
