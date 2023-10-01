@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>FinView :: Editar Orçamento</title>
+</head>
+<body>
+    <div class="container mt-5">
+	<nav class="navbar navbar-expand bg-body-tertiary d-flex justify-content-between mb-3">
+		<div class="navbar-nav">
+			<a class="nav-link" href="/">Home</a>
+			<a class="nav-link" href="/lista">Transações</a>
+			<a class="nav-link" href="/lista/categoria">Categorias</a>
+			<a class="nav-link" href="/lista/orcamento">Orçamentos</a>
+			<a class="nav-link" href="/impexp">Importar/Exportar</a>
+		</div>
+	</nav>
+        <h1 class="display-4 text-center">Editar Orçamento</h1>
+        
+        <form th:object="${requisicaoEditarOrcamento}" th:action="@{/orcamento/{id}(id=${id})}" method="post" class="mt-2">
+             <div class="mb-3">
+			    <label for="categoria" class="form-label">Categoria</label>
+			    <select th:field="*{categoria}" class="form-select">
+			        <option value="">Selecione uma categoria</option>
+			        <option th:each="categoria : ${categorias}" th:value="${categoria.id}" th:text="${categoria.nome}"></option>
+			    </select>
+			    <input type="hidden" th:attr="value=${requisicaoEditarOrcamento.categoria?.id}" />
+			    <div class="invalid-feedback" th:errors="*{categoria}">
+					Escolha uma ou mais categorias.
+			    </div>
+			</div>
+            
+            <div class="mb-3">
+                <label for="limite" class="form-label">Limite</label>
+                <input th:field="*{limite}" th:errorclass="is-invalid" type="text" class="form-control">
+                <input type="hidden" th:attr="value=${requisicaoEditarOrcamento.limite}" />
+                <div class="invalid-feedback" th:errors="*{limite}">
+                    Preencha um limite para o orçamento.
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-outline-secondary col-12 mb-4">Enviar</button>
+        </form>
+        <form th:action="@{'/orcamento/' + ${id}}" method="post" style="display: inline;">
+    		<input type="hidden" name="_method" value="DELETE">
+    		<button type="submit" class="btn btn-outline-danger col-12 mb-4">Deletar</button>
+		</form>        
+    </div>
+</body>
+</html>

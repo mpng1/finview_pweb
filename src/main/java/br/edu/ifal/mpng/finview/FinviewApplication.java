@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-@EntityScan("br.edu.ifal.mpng.finview.dominio.transacao")
+@EntityScan("br.edu.ifal.mpng.finview.dominio")
 public class FinviewApplication {
 
 	public static void main(String[] args) {

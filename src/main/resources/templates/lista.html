@@ -4,33 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <title>Minhas Transações</title>
+    <title>FinView :: Minhas Transações</title>
 </head>
 <body>
     <div class="container mt-5">
 	<nav class="navbar navbar-expand bg-body-tertiary d-flex justify-content-between mb-3">
 			<div class="navbar-nav">
+				<a class="nav-link" href="/">Home</a>
 				<a class="nav-link" href="/lista">Transações</a>
 				<a class="nav-link" href="/lista/categoria">Categorias</a>
 				<a class="nav-link" href="/lista/orcamento">Orçamentos</a>
+				<a class="nav-link" href="/impexp">Importar/Exportar</a>
 			</div>
 		</nav>
         <h1 class="display-4 text-center">Minhas Transações</h1>
 			<nav class="navbar navbar-expand bg-body-tertiary d-flex justify-content-between mb-3">
 				<div class="navbar-nav">
-					<a th:classappend="${somaOuSubtrai} == null ? 'active'" class="nav-link" href="/lista">Todas</a>
-					<a th:classappend="${somaOuSubtrai} == 'soma' ? 'active'" class="nav-link" href="/lista/soma">Positivas</a>
-					<a th:classappend="${somaOuSubtrai} == 'subtrai' ? 'active'" class="nav-link" href="/lista/subtrai">Negativas</a>
+					<form th:action="@{/lista}" method="get">
+					    <div class="form-group">
+					        <label for="categoriaDropdown">Categoria</label>
+					        <select class="form-control" id="categoriaDropdown" name="categoria">
+					            <option value="all">Todas</option>
+					            <option th:each="categoria : ${categorias}" th:value="${categoria.nome}" th:text="${categoria.nome}"></option>
+					        </select>
+					    </div>					    
+					    <button type="submit" class="btn btn-outline-secondary">Filtrar</button>
+					</form>
 				</div>
 				<a href="/transacao"><button class="btn btn-outline-secondary">Nova</button></a>
 			</nav>
-	        <form action="/transacao/csv" method="post" enctype="multipart/form-data" class="mt-4 mb-4">
-	            <div class="mb-3">
-	                <label for="file" class="display-6 form-label">Importar CSV</label>
-	                <input type="file" id="file" name="file" accept=".csv" class="form-control">
-	            </div>
-	            <button type="submit" class="btn btn-outline-secondary col-12">Enviar</button>
-	        </form>
 			<div class="row">
 				<ul class="list-group list-group-horizontal">
 					<li class="list-group-item col-3">Data e hora</li>
@@ -69,7 +71,33 @@
 			        </ul>
 			    </th:block>
 			</div>
-
 		</div>
+		<script>
+		    document.addEventListener("DOMContentLoaded", function () {
+		        const categoryDropdown = document.getElementById("categoryDropdown");
+		        const dropdownItems = document.querySelectorAll(".dropdown-item[data-category]");
+		
+		        dropdownItems.forEach(function (item) {
+		            item.addEventListener("click", function (event) {
+		                event.preventDefault();
+		                const selectedCategory = item.getAttribute("data-category");
+		                filterTransactions(selectedCategory);
+		            });
+		        });
+		
+		        function filterTransactions(category) {
+		            const transactionRows = document.querySelectorAll(".row.th\\:each");
+		            transactionRows.forEach(function (row) {
+		                const transactionCategory = row.getAttribute("data-category");
+		                if (category === "all" || category === transactionCategory) {
+		                    row.style.display = "block";
+		                } else {
+		                    row.style.display = "none";
+		                }
+		            });
+		        }
+		    });
+		</script>
+
 	</body>
 </html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>FinView :: Meus Orçamentos</title>
+</head>
+<body>
+    <div class="container mt-5">
+	<nav class="navbar navbar-expand bg-body-tertiary d-flex justify-content-between mb-3">
+		<div class="navbar-nav">
+			<a class="nav-link" href="/">Home</a>
+			<a class="nav-link" href="/lista">Transações</a>
+			<a class="nav-link" href="/lista/categoria">Categorias</a>
+			<a class="nav-link" href="/lista/orcamento">Orçamentos</a>
+			<a class="nav-link" href="/impexp">Importar/Exportar</a>
+		</div>
+	</nav>
+        <h1 class="display-4 text-center">Meus Orçamentos</h1>
+			<nav class="navbar navbar-expand bg-body-tertiary d-flex justify-content-between mb-3">
+				<div></div>
+				<a href="/orcamento"><button class="btn btn-outline-secondary">Novo</button></a>
+			</nav>
+			<div class="row">
+				<ul class="list-group list-group-horizontal">
+					<li class="list-group-item col-3">Categoria</li>
+					<li class="list-group-item col-3">Orçado</li>
+					<li class="list-group-item col-3">Realizado</li>
+					<li class="list-group-item col-3">Diferença</li>
+				</ul>
+			</div>			
+			<div class="row" th:each="orcamento : ${orcamentos}">
+			    <a th:href="@{'/orcamento/' + ${orcamento.id}}">
+			        <ul class="list-group list-group-horizontal">
+			            <li class="list-group-item col-3" th:text="${orcamento.categoria.nome}">Dívida</li>
+			            <li class="list-group-item col-3" th:text="${orcamento.limite}">500</li>
+			            <li class="list-group-item col-3">
+			                <span th:if="${categoriaTotais[orcamento.categoria] != null}" th:text="${categoriaTotais[orcamento.categoria]}">400,00</span>
+			                <span th:if="${categoriaTotais[orcamento.categoria] == null}" th:text="0">0</span>
+			            </li>
+			            <li class="list-group-item col-3">
+			                <span th:if="${categoriaTotais[orcamento.categoria] != null}" th:text="${categoriaTotais[orcamento.categoria]} - ${orcamento.limite}">100</span>
+			                <span th:if="${categoriaTotais[orcamento.categoria] == null}" th:text="0 - ${orcamento.limite}">0 - 500</span>
+			            </li>
+			        </ul>
+			    </a>
+			</div>
+
+		</div>
+	</body>
+</html>
