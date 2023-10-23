@@ -15,7 +15,9 @@ import br.edu.ifal.mpng.finview.aplicacao.dto.RequisicaoNovaTransacaoCSV;
 public class ParseadorDeCSV {
 	
     public static List<RequisicaoNovaTransacaoCSV> parse(InputStream inputStream) throws IOException {
-        try (CSVReader reader = new CSVReader(new InputStreamReader(inputStream, "UTF-8"))) {
+
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+        try (CSVReader reader = new CSVReader(inputStreamReader)) {
            
             ColumnPositionMappingStrategy<RequisicaoNovaTransacaoCSV> mappingStrategy =
                     new ColumnPositionMappingStrategy<>();

@@ -41,11 +41,11 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-outline-secondary col-12 mb-4">Enviar</button>
+            <button type="submit" id="enviar-orcamento" class="btn btn-outline-secondary col-12 mb-4">Enviar</button>
         </form>
         <form th:action="@{'/orcamento/' + ${id}}" method="post" style="display: inline;">
     		<input type="hidden" name="_method" value="DELETE">
-    		<button type="submit" class="btn btn-outline-danger col-12 mb-4">Deletar</button>
+    		<button type="submit" id="excluir-orcamento" class="btn btn-outline-danger col-12 mb-4">Deletar</button>
 		</form>        
     </div>
 </body>

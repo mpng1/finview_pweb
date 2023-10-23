@@ -20,7 +20,7 @@
         <h1 class="display-4 text-center">Minhas Categorias</h1>
 			<nav class="navbar navbar-expand bg-body-tertiary d-flex justify-content-between mb-3">
 				<div></div>
-				<a href="/categoria"><button class="btn btn-outline-secondary">Nova</button></a>
+				<a href="/categoria"><button id="criar-categoria" class="btn btn-outline-secondary">Nova</button></a>
 			</nav>
 			<div class="row" th:each="categoria : ${categorias}">
 			<th:block th:unless="${categoria.id == 3}">

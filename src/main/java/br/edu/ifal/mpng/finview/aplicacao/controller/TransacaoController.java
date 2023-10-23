@@ -33,15 +33,22 @@ import jakarta.validation.Valid;
 @RequestMapping("transacao")
 public class TransacaoController {
 	
+
+    private TransacaoService transacaoService;
+    private CategoriaRepository categoriaRepository;
+    private TransacaoRepository transacaoRepository;
 	
-	@Autowired
-	private TransacaoService transacaoService;
-	
-	@Autowired
-	private CategoriaRepository categoriaRepository;
-	
-	@Autowired
-	private TransacaoRepository transacaoRepository;
+    @Autowired
+    public TransacaoController(
+            TransacaoService transacaoService,
+            CategoriaRepository categoriaRepository,
+            TransacaoRepository transacaoRepository
+    ) {
+        this.transacaoService = transacaoService;
+        this.categoriaRepository = categoriaRepository;
+        this.transacaoRepository = transacaoRepository;
+    }
+
 	
 	@GetMapping
 	public String nova(Model model) {
@@ -60,7 +67,7 @@ public class TransacaoController {
 	    requisicaoEditarTransacao.setDescricao(transacao.getDescricao()); 
 	    requisicaoEditarTransacao.setCategoria(transacao.getCategoria());
 	    List<Categoria> categorias = categoriaRepository.findAll();
-	    model.addAttribute("id", transacao.getId());
+	    model.addAttribute("id", id);
 	    model.addAttribute("categorias", categorias);
 	    model.addAttribute("requisicaoEditarTransacao", requisicaoEditarTransacao);
 
@@ -85,7 +92,7 @@ public class TransacaoController {
 			transacaoService.processCSV(file);
 			return "redirect:/lista/lista";
 		} catch (Exception e) {
-			return "Erro processando CSV";
+			return "errocsv";
 		}
 	}
 	

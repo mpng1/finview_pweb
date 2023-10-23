@@ -14,15 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.edu.ifal.mpng.finview.aplicacao.dto.RequisicaoEditarOrcamento;
-import br.edu.ifal.mpng.finview.aplicacao.dto.RequisicaoEditarTransacao;
-import br.edu.ifal.mpng.finview.aplicacao.dto.RequisicaoNovaCategoria;
-import br.edu.ifal.mpng.finview.aplicacao.dto.RequisicaoNovaTransacao;
 import br.edu.ifal.mpng.finview.aplicacao.dto.RequisicaoNovoOrcamento;
 import br.edu.ifal.mpng.finview.dominio.orcamento.Orcamento;
 import br.edu.ifal.mpng.finview.dominio.orcamento.OrcamentoRepository;
 import br.edu.ifal.mpng.finview.dominio.transacao.Categoria;
 import br.edu.ifal.mpng.finview.dominio.transacao.CategoriaRepository;
-import br.edu.ifal.mpng.finview.dominio.transacao.Transacao;
 import br.edu.ifal.mpng.finview.dominio.transacao.TransacaoRepository;
 import jakarta.validation.Valid;
 
@@ -39,7 +35,7 @@ public class OrcamentoController {
 	@Autowired
 	TransacaoRepository transacaoRepository;
 	
-	@GetMapping
+	@GetMapping("")
 	public String novo(Model model) {
 		List<Categoria> categorias = categoriaRepository.findAll();
         model.addAttribute("categorias", categorias);
@@ -55,14 +51,14 @@ public class OrcamentoController {
 	    requisicaoEditarOrcamento.setCategoria(orcamento.getCategoria()); 
 	    requisicaoEditarOrcamento.setLimite(orcamento.getLimite());
 	    List<Categoria> categorias = categoriaRepository.findAll();
-	    model.addAttribute("id", orcamento.getId());
+	    model.addAttribute("id", id);
 	    model.addAttribute("categorias", categorias);
 	    model.addAttribute("requisicaoEditarOrcamento", requisicaoEditarOrcamento);
 
 	    return "orcamentoeditar";
 	}
 	
-	@PostMapping
+	@PostMapping("")
 	public String enviar(@Valid RequisicaoNovoOrcamento requisicao, BindingResult result) throws ParseException {
 		if(result.hasErrors()) {
 			return "orcamento";

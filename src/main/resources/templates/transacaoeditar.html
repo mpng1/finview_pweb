@@ -69,11 +69,11 @@
 			    </div>
 			</div>
 
-            <button type="submit" class="btn btn-outline-secondary col-12 mb-4">Enviar</button>
+            <button type="submit" id="botao-enviar-transacao" class="btn btn-outline-secondary col-12 mb-4">Enviar</button>
         </form>
         <form th:action="@{'/transacao/' + ${id}}" method="post" style="display: inline;">
     		<input type="hidden" name="_method" value="DELETE">
-    		<button type="submit" class="btn btn-outline-danger col-12 mb-4">Deletar</button>
+    		<button type="submit" id="botao-excluir-transacao" class="btn btn-outline-danger col-12 mb-4">Deletar</button>
 		</form>
     </div>
 

@@ -68,6 +68,13 @@ public class Orcamento {
 		this.categoria = categoria;
 		this.limite = limite;
 	}
+
+
+
+	public Object findById(Long orcamentoId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	

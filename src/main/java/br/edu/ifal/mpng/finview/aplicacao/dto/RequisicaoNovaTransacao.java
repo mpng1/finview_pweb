@@ -71,7 +71,11 @@ public class RequisicaoNovaTransacao {
 		Transacao transacao = new Transacao();
 	    transacao.setData(data);
 		transacao.setDescricao(descricao);
-		transacao.setValor(valor);
+		if (this.valor != null) {
+	        transacao.setValor(this.valor);
+	    } else {
+	        transacao.setValor(BigDecimal.ZERO); 
+	    }
 		transacao.setCategoria(categoria);
 	    if (valor.compareTo(BigDecimal.ZERO) > 0) {
 	        transacao.setSomaOuSubtrai(SomaOuSubtrai.SOMA);
